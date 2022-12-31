@@ -7,11 +7,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,49 +27,66 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            UserCard()
+            UserList()
         }
-
     }
 }
 
+@Composable
+fun UserList() {
+    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+
+        for (i in 1..10) {
+            UserCard()
+        }
+    }
+
+}
 
 @Composable
 fun UserCard() {
     val context = LocalContext.current
-    Row(
+    Card(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(12.dp)
-            .border(width = 1.dp, color = Color.Green)
-            .padding(6.dp)
+            .padding(2.dp),
+        elevation = 4.dp
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.bird),
-            contentDescription = "",
-            contentScale = ContentScale.Crop,
+        Row(
             modifier = Modifier
-                .size(120.dp)
-                .clip(CircleShape)
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(12.dp)
+                .padding(6.dp)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.bird),
+                contentDescription = "",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(120.dp)
+                    .clip(CircleShape)
 
-        )
-        Column(modifier = Modifier.padding(5.dp)) {
-            Text(text = stringResource(id = R.string.dummy_text))
-            Button(onClick = {
-                //perform button click action here------
-                Toast.makeText(context, "Button clicked", Toast.LENGTH_LONG).show();
-            }) {
-                Text(text = "View Profile")
+            )
+            Column(modifier = Modifier.padding(5.dp)) {
+                Text(text = stringResource(id = R.string.dummy_text))
+                Button(onClick = {
+                    //perform button click action here------
+                    Toast.makeText(context, "Button clicked", Toast.LENGTH_LONG).show();
+                }) {
+                    Text(text = "View Profile")
+                }
             }
         }
     }
+
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     Surface(modifier = Modifier.fillMaxSize()) {
-        UserCard()
+        UserList()
     }
 }
