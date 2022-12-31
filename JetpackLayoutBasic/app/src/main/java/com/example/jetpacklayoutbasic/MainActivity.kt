@@ -7,6 +7,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -32,11 +34,32 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+data class User(
+    val id: Int
+)
+
+val users = listOf(
+    User(1),
+    User(1),
+    User(1),
+    User(1),
+    User(1),
+    User(1),
+    User(1),
+    User(1),
+    User(1)
+)
+
+
 @Composable
 fun UserList() {
-    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-
+    /*Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
         for (i in 1..10) {
+            UserCard()
+        }
+    }*/
+    LazyColumn {
+        items(users) { user ->
             UserCard()
         }
     }
